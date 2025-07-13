@@ -130,7 +130,7 @@ class BaseMetric(metaclass=ABCMeta):
         if is_main_process():
             # cast all tensors in results list to cpu
             results = _to_cpu(results)
-            _metrics = self.compute_metrics(results)  # type: ignore
+            _metrics, detail_aps = self.compute_metrics(results)  # type: ignore
             # Add prefix to metric names
             if self.prefix:
                 _metrics = {
@@ -145,7 +145,7 @@ class BaseMetric(metaclass=ABCMeta):
 
         # reset the results list
         self.results.clear()
-        return metrics[0]
+        return metrics[0], detail_aps
 
 
 @METRICS.register_module()
