@@ -76,7 +76,7 @@ class Evaluator:
         """
         metrics = {}
         for metric in self.metrics:
-            _results = metric.evaluate(size)
+            _results, detail_aps = metric.evaluate(size)
 
             # Check metric name conflicts
             for name in _results.keys():
@@ -87,7 +87,7 @@ class Evaluator:
                         'have different prefixes.')
 
             metrics.update(_results)
-        return metrics
+        return metrics, detail_aps
 
     def offline_evaluate(self,
                          data_samples: Sequence,
